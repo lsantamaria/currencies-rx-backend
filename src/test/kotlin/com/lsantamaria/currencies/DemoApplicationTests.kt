@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.codec.ServerSentEvent
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Flux
+import java.util.stream.Stream
 
 
 internal class Profile {
@@ -28,7 +30,7 @@ class DemoApplicationTests {
 		}
 
 		val eventStream = client.get()
-				.uri("/profiles")
+				.uri("/currencies")
 				.retrieve()
 				.bodyToFlux(Profile::class.java);
 
@@ -41,6 +43,13 @@ class DemoApplicationTests {
 
 		Thread.sleep(30000);
 
+	}
+
+	@Test
+	fun testing(){
+		var theFlux = Flux.fromStream(Stream.of("1","2", "3"));
+
+		theFlux.subscribe()
 	}
 
 }

@@ -16,4 +16,5 @@ class CorsGlobalConfiguration : WebFluxConfigurer {
                 .allowedMethods("GET")
                 .maxAge(3600)
     }
+
 }

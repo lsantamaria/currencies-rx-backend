@@ -1,4 +1,4 @@
-package com.lsantamaria.currencies.domain
+package com.lsantamaria.currencies.domain.model
 
 import lombok.Builder
 

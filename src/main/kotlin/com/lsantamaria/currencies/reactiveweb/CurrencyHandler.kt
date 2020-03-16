@@ -1,6 +1,6 @@
 package com.lsantamaria.currencies.reactiveweb
 
-import com.lsantamaria.currencies.domain.Currency
+import com.lsantamaria.currencies.domain.model.Currency
 import com.lsantamaria.currencies.domain.service.CurrencyService
 import org.reactivestreams.Publisher
 import org.springframework.http.MediaType
@@ -13,8 +13,18 @@ import reactor.core.publisher.Mono
 @Component
 class CurrencyHandler(private val currencyService: CurrencyService) {
 
-    fun fetchCurrencies(request:ServerRequest): Mono<ServerResponse> {
-        return streamingResponse(currencyService.getAllCurrencies())
+    fun fetchCurrenciesList(request:ServerRequest): Mono<ServerResponse> {
+        return defaultResponse(currencyService.getCurrenciesList())
+    }
+
+    fun fetchCurrenciesStream(request:ServerRequest): Mono<ServerResponse> {
+        return streamingResponse(currencyService.getCurrenciesStream())
+    }
+
+    private fun defaultResponse(currencyFlux: Publisher<Currency>): Mono<ServerResponse>{
+        return ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(currencyFlux, Currency::class.java)
     }
 
     private fun streamingResponse(currencyFlux: Publisher<Currency>): Mono<ServerResponse>{
