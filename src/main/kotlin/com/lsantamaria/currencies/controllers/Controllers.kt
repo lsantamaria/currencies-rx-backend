@@ -16,7 +16,7 @@ class CurrenciesController {
     @GetMapping(path = ["/currencies-stream"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun getCurrencies(): Flux<Currency> {
         return Flux.generate<Currency> {
-            movieEventSynchronousSink -> movieEventSynchronousSink.next(Currency("currency", Instant.now().toString()))
+            movieEventSynchronousSink -> movieEventSynchronousSink.next(Currency("currency", Instant.now().toString(), "", ""))
         }.delayElements(Duration.ofSeconds(3))
     }
 }

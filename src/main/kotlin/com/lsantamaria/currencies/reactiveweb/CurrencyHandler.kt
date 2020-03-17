@@ -21,7 +21,7 @@ class CurrencyHandler(private val currencyService: CurrencyService) {
         return streamingResponse(currencyService.getCurrenciesStream())
     }
 
-    private fun defaultResponse(currencyFlux: Publisher<Currency>): Mono<ServerResponse>{
+    private fun defaultResponse(currencyFlux: Publisher<List<Currency>>): Mono<ServerResponse>{
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(currencyFlux, Currency::class.java)
