@@ -1,5 +1,6 @@
 package com.lsantamaria.currencies.integration
 
+import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import reactor.core.publisher.Mono
@@ -7,8 +8,8 @@ import org.springframework.web.util.UriBuilder
 import reactor.core.scheduler.Schedulers
 import java.net.URI
 
-
 abstract class ExternalClient<T>(url:String) {
+    private val logger = LoggerFactory.getLogger(javaClass)
     private val client: WebClient = WebClient
             .builder()
             .baseUrl(url)
@@ -36,8 +37,8 @@ abstract class ExternalClient<T>(url:String) {
     }
 
     private fun onSuccess(): (t: T) -> Unit {
-        return { args ->
-            println("SUCCESS, response ${args.toString()}")
+        return { response ->
+            logger.info("Fetch data from ${getURI()}, successful, response ${response.toString()}")
         }
     }
 

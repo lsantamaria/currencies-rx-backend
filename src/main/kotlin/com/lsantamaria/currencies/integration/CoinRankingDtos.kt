@@ -1,7 +1,6 @@
 package com.lsantamaria.currencies.integration
 
 data class CoinRankingDto(val id:String,
-                          val symbol:String,
                           val name:String,
                           val description:String?,
                           val iconUrl:String?)
