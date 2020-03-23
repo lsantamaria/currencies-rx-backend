@@ -1,33 +1,29 @@
 package com.lsantamaria.currencies.domain.service
 
+import com.lsantamaria.currencies.domain.model.CurrencyEvent
 import com.lsantamaria.currencies.domain.model.Currency
+import com.lsantamaria.currencies.domain.repository.EventsRepository
 import com.lsantamaria.currencies.integration.*
 
 import org.reactivestreams.Publisher
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.time.Duration
-import java.time.Instant
 import java.util.function.BiFunction
 import java.util.stream.Collectors.toList
 
 @Component
 class CurrencyService(val coinRankingClient: ExternalClient<CoinRankingResponse>,
-                      val coinloreClient: ExternalClient<CoinloreResponse>) {
-
-    fun getCurrenciesStream(): Publisher<Currency> {
-        return Flux.generate<Currency> { movieEventSynchronousSink ->
-            movieEventSynchronousSink.next(Currency("currency", Instant.now().toString(), "", ""))
-        }.delayElements(Duration.ofSeconds(3))
+                      val coinloreClient: ExternalClient<CoinloreResponse>,
+                      val eventsRepository: EventsRepository) {
+    fun getCurrenciesStream(): Publisher<CurrencyEvent> {
+        return eventsRepository.findWithTailableCursorBy()
     }
 
     fun getCurrenciesList(): Publisher<List<Currency>> {
         val coinRankingResponse: Mono<CoinRankingResponse> = coinRankingClient.fetch()
         val coinloreResponse: Mono<CoinloreResponse> = coinloreClient.fetch()
 
-        val combinator = BiFunction<CoinloreResponse, CoinRankingResponse, List<Currency>> { coinlore, coinRanking
-            ->
+        val combinator = BiFunction<CoinloreResponse, CoinRankingResponse, List<Currency>> { coinlore, coinRanking ->
             val coins = coinlore.data
             val coinsWithDetails = coinRanking.data.coins
 
