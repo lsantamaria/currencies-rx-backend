@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -25,25 +26,34 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+	create("integrationTest") {
+		withConvention(KotlinSourceSet::class) {
+			kotlin.srcDir("src/itest/kotlin")
+			resources.srcDir("src/itest/resources")
+			compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+			runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
+		}
+	}
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
-//	implementation("org.springframework.boot:spring-boot-starter-jersey")
-//	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 
 	compileOnly("org.projectlombok:lombok")
-//	compileOnly("org.springframework.boot:spring-boot-starter-data-mongodb")
-	compileOnly("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
-//	compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 	annotationProcessor("org.projectlombok:lombok")
 
+	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
@@ -61,4 +71,11 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
 	}
+}
+task<Test>("integrationTest") {
+	description = "Runs the integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+	classpath = sourceSets["integrationTest"].runtimeClasspath
+	mustRunAfter(tasks["test"])
 }
