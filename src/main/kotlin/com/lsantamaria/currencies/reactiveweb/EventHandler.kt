@@ -1,6 +1,5 @@
 package com.lsantamaria.currencies.reactiveweb
 
-import com.lsantamaria.currencies.domain.model.Currency
 import com.lsantamaria.currencies.domain.model.CurrencyEvent
 import com.lsantamaria.currencies.domain.service.EventService
 import com.lsantamaria.currencies.integration.EventDto
@@ -32,7 +31,7 @@ class EventHandler(private val eventService: EventService) {
     private fun streamingResponse(currencyFlux: Publisher<CurrencyEvent>): Mono<ServerResponse>{
         return ServerResponse.ok()
                 .contentType(MediaType.TEXT_EVENT_STREAM)
-                .body(currencyFlux, Currency::class.java)
+                .body(currencyFlux, CurrencyEvent::class.java)
     }
 
     private fun defaultResponse(eventMono: Mono<CurrencyEvent>): Mono<ServerResponse> {
