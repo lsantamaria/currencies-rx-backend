@@ -7,7 +7,7 @@ import java.net.URI
 
 @Component
 class CoinRankingClient(url:String = COINRANKING_BASE_URL) : ExternalClient<CoinRankingResponse>(url) {
-    override fun getClazz(): Class<CoinRankingResponse> {
+    override fun getResponseClass(): Class<CoinRankingResponse> {
         return CoinRankingResponse::class.java
     }
 

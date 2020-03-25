@@ -13,11 +13,7 @@ import java.util.stream.Collectors.toList
 
 @Component
 class CurrencyService(val coinRankingClient: ExternalClient<CoinRankingResponse>,
-                      val coinloreClient: ExternalClient<CoinloreResponse>,
-                      val eventsRepository: EventsRepository) {
-    fun getCurrenciesStream(): Publisher<CurrencyEvent> {
-        return eventsRepository.findWithTailableCursorBy()
-    }
+                      val coinloreClient: ExternalClient<CoinloreResponse>) {
 
     fun getCurrenciesList(): Publisher<List<Currency>> {
         val coinRankingResponse: Mono<CoinRankingResponse> = coinRankingClient.fetch()

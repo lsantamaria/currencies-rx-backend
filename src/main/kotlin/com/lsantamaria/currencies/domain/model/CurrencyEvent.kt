@@ -7,4 +7,4 @@ enum class CurrencyEventType{
 }
 
 @Document(collection = "currencyEvent")
-data class CurrencyEvent(val id:String, val type: CurrencyEventType, val info:String)
+data class CurrencyEvent(val id:String, val type: CurrencyEventType, val info:String?)

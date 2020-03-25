@@ -8,7 +8,7 @@ import java.net.URI
 @Component
 class CoinloreClient(url:String = COINLORE_BASE_URL) : ExternalClient<CoinloreResponse>(url) {
 
-    override fun getClazz(): Class<CoinloreResponse> {
+    override fun getResponseClass(): Class<CoinloreResponse> {
         return CoinloreResponse::class.java
     }
 

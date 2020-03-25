@@ -20,7 +20,7 @@ abstract class ExternalClient<T>(url:String) {
                 .get()
                 .uri(getURI())
                 .retrieve()
-                .bodyToMono(getClazz())
+                .bodyToMono(getResponseClass())
                 .doOnSuccess(onSuccess())
                 .onErrorResume(onError())
                 .subscribeOn(Schedulers.elastic())
@@ -44,5 +44,5 @@ abstract class ExternalClient<T>(url:String) {
 
     abstract fun getURI():(t: UriBuilder) -> URI
 
-    abstract fun getClazz(): Class<T>
+    abstract fun getResponseClass(): Class<T>
 }
