@@ -1,1 +1,1 @@
-rootProject.name = "demo"
+rootProject.name = "currencies-rx-backend"
