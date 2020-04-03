@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -eo pipefail
-
-echo "Using currencies backend buildpack"

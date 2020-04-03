@@ -3,7 +3,7 @@
 set -eo pipefail
 
 if [[ -z "$1" ]]; then
-  echo "tag version required. Usage: tagImage.sh <version>"
+  echo "tag version required. Usage: tagImage <version>"
   exit 1
 fi
 
