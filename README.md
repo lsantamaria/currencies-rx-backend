@@ -8,12 +8,11 @@ A reactive API that aggregates cryptocurrency data and returns event streams.
 - Kotlin 1.3
 - Spring Boot 2.2
 - Spring WebFlux 5
-- MongoDB 4.0
+- MongoDB 4.0 (embedded)
 
 ### Requirements
 
 - Java JDK 11
-- An instance of MongoDB running
 
 ### Installation
 
@@ -40,4 +39,4 @@ You can run the project either running the JAR or using spring-boot gradle plugi
 ```
 ./gradlew spring-boot:run
 ```
-The API will be deployed at http://localhost:8081.
+The API will be deployed at http://localhost:8080.

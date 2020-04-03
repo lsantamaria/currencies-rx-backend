@@ -48,6 +48,8 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok")
 
+	runtimeOnly("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 

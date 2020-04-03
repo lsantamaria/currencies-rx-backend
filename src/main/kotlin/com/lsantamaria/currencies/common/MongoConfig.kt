@@ -26,6 +26,6 @@ class MongoConfig : AbstractReactiveMongoConfiguration() {
     }
 
     override fun reactiveMongoClient(): MongoClient {
-        return MongoClients.create()
+        return MongoClients.create("mongodb://localhost:27017/currencies")
     }
 }
