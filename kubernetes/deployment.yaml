@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: currencies-rx-backend
+  name: currencies-rx-backend
+spec:
+  ports:
+    - name: currencies-rx-backend
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: currencies-rx-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: currencies-rx-backend
+  name: currencies-rx-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currencies-rx-backend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: currencies-rx-backend
+    spec:
+      containers:
+      - image: lsantamaria/currencies-rx-backend
+        name: currencies-rx-backend
+        resources: {}
+status: {}
