@@ -13,6 +13,7 @@ class WebFluxConfig : WebFluxConfigurer{
         registry.addMapping("/**")
                 .allowedOrigins("*") // any host or put domain(s) here
                 .allowedMethods("GET, POST", "PUT", "DELETE", "OPTIONS") // put the http verbs you want allow
-                .allowedHeaders("x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN") // put the http headers you want allow
+                .allowedHeaders("x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN, Access-Control-Allow-Origin") // put the http headers you want allow
+                .exposedHeaders("x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN, Access-Control-Allow-Origin")
     }
 }
